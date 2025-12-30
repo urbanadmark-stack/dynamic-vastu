@@ -6,25 +6,33 @@
 }
 
 :root {
-    --primary-color: #2563eb;
-    --primary-dark: #1e40af;
-    --secondary-color: #10b981;
-    --text-color: #1f2937;
-    --text-light: #6b7280;
-    --border-color: #e5e7eb;
-    --bg-light: #f9fafb;
+    --primary-color: #4f7df9;
+    --primary-dark: #3b6ae8;
+    --primary-light: #e8edff;
+    --secondary-color: #5bb98a;
+    --secondary-light: #e6f7f0;
+    --text-color: #2d3748;
+    --text-light: #718096;
+    --text-lighter: #a0aec0;
+    --border-color: #e2e8f0;
+    --bg-light: #f7fafc;
+    --bg-lighter: #fafbfc;
     --white: #ffffff;
-    --danger: #ef4444;
-    --shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
-    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    --danger: #f56565;
+    --danger-light: #fed7d7;
+    --shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.06), 0 1px 2px 0 rgba(0, 0, 0, 0.04);
+    --shadow-md: 0 4px 12px 0 rgba(0, 0, 0, 0.08), 0 2px 4px 0 rgba(0, 0, 0, 0.04);
+    --shadow-lg: 0 10px 24px 0 rgba(0, 0, 0, 0.1), 0 4px 8px 0 rgba(0, 0, 0, 0.06);
+    --shadow-soft: 0 2px 8px 0 rgba(79, 125, 249, 0.12);
 }
 
 body {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-    line-height: 1.6;
+    line-height: 1.7;
     color: var(--text-color);
-    background-color: var(--white);
+    background-color: var(--bg-lighter);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
 .container {
@@ -35,8 +43,9 @@ body {
 
 /* Header */
 .main-header {
-    background: var(--white);
-    box-shadow: var(--shadow-md);
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    box-shadow: var(--shadow);
     position: sticky;
     top: 0;
     z-index: 1000;
@@ -73,8 +82,8 @@ body {
 .logo-text {
     font-size: 1.5rem;
     color: var(--primary-color);
-    font-weight: 700;
-    letter-spacing: -0.5px;
+    font-weight: 600;
+    letter-spacing: -0.3px;
 }
 
 .main-nav {
@@ -90,7 +99,7 @@ body {
     font-size: 0.95rem;
     padding: 0.5rem 0;
     position: relative;
-    transition: color 0.2s;
+    transition: color 0.3s ease;
 }
 
 .nav-link::after {
@@ -99,9 +108,10 @@ body {
     bottom: 0;
     left: 0;
     width: 0;
-    height: 2px;
-    background: var(--primary-color);
-    transition: width 0.3s;
+    height: 2.5px;
+    background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+    border-radius: 2px 2px 0 0;
+    transition: width 0.3s ease;
 }
 
 .nav-link:hover,
@@ -375,9 +385,10 @@ body {
     grid-template-columns: auto 1fr auto;
     gap: 0;
     background: var(--white);
-    padding: 1.75rem;
-    border-radius: 1rem;
-    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    padding: 2rem;
+    border-radius: 1.25rem;
+    box-shadow: var(--shadow-lg);
+    border: 1px solid var(--border-color);
 }
 
 .search-input-wrapper {
@@ -386,19 +397,21 @@ body {
 
 .search-input,
 .search-select {
-    padding: 1rem 1.25rem;
-    border: 2px solid var(--border-color);
-    border-radius: 0.5rem;
+    padding: 1rem 1.5rem;
+    border: 1.5px solid var(--border-color);
+    border-radius: 0.75rem;
     font-size: 1rem;
-    transition: all 0.2s;
+    transition: all 0.3s ease;
     width: 100%;
+    background: var(--bg-light);
 }
 
 .search-input:focus,
 .search-select:focus {
     outline: none;
     border-color: var(--primary-color);
-    box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.1);
+    background: var(--white);
+    box-shadow: 0 0 0 4px rgba(79, 125, 249, 0.1);
 }
 
 .search-btn {
@@ -441,38 +454,43 @@ body {
 /* Buttons */
 .btn {
     display: inline-block;
-    padding: 0.75rem 1.5rem;
-    border-radius: 0.375rem;
+    padding: 0.875rem 2rem;
+    border-radius: 0.625rem;
     text-decoration: none;
     font-weight: 500;
     text-align: center;
     cursor: pointer;
     border: none;
-    transition: all 0.2s;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     font-size: 1rem;
+    letter-spacing: 0.01em;
 }
 
 .btn-primary {
-    background: var(--primary-color);
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
     color: var(--white);
+    box-shadow: var(--shadow-soft);
 }
 
 .btn-primary:hover {
-    background: var(--primary-dark);
+    background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary-color) 100%);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
 }
 
 .btn-outline {
     background: transparent;
     color: var(--primary-color);
     border: 2px solid var(--primary-color);
-    font-weight: 600;
+    font-weight: 500;
 }
 
 .btn-outline:hover {
     background: var(--primary-color);
     color: var(--white);
     transform: translateY(-2px);
-    box-shadow: 0 4px 6px -1px rgba(37, 99, 235, 0.3);
+    box-shadow: var(--shadow-soft);
+    border-color: var(--primary-dark);
 }
 
 .btn-block {
@@ -501,17 +519,17 @@ body {
 
 .property-card {
     background: var(--white);
-    border-radius: 1rem;
+    border-radius: 1.25rem;
     overflow: hidden;
-    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
-    transition: all 0.3s ease;
+    box-shadow: var(--shadow);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     border: 1px solid var(--border-color);
 }
 
 .property-card:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-    border-color: var(--primary-color);
+    transform: translateY(-6px);
+    box-shadow: var(--shadow-lg);
+    border-color: var(--primary-light);
 }
 
 .property-image {
@@ -526,22 +544,23 @@ body {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transition: transform 0.5s ease;
+    transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .property-card:hover .property-image img {
-    transform: scale(1.05);
+    transform: scale(1.08);
 }
 
 .property-status,
 .property-type {
     position: absolute;
     top: 1rem;
-    padding: 0.375rem 0.75rem;
-    border-radius: 0.25rem;
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
     font-size: 0.875rem;
     font-weight: 500;
     color: var(--white);
+    backdrop-filter: blur(8px);
 }
 
 .property-status {
@@ -555,7 +574,7 @@ body {
 }
 
 .property-content {
-    padding: 1.75rem;
+    padding: 2rem;
 }
 
 .property-content h3 {
@@ -624,9 +643,9 @@ body {
 .filters-section {
     background: var(--white);
     padding: 2.5rem;
-    border-radius: 1rem;
+    border-radius: 1.25rem;
     margin-bottom: 3rem;
-    box-shadow: var(--shadow-md);
+    box-shadow: var(--shadow);
     border: 1px solid var(--border-color);
 }
 
@@ -639,17 +658,21 @@ body {
 
 .filter-input,
 .filter-select {
-    padding: 0.75rem;
-    border: 1px solid var(--border-color);
-    border-radius: 0.375rem;
+    padding: 0.875rem 1.25rem;
+    border: 1.5px solid var(--border-color);
+    border-radius: 0.625rem;
     font-size: 1rem;
     width: 100%;
+    background: var(--bg-light);
+    transition: all 0.3s ease;
 }
 
 .filter-input:focus,
 .filter-select:focus {
     outline: none;
     border-color: var(--primary-color);
+    background: var(--white);
+    box-shadow: 0 0 0 3px rgba(79, 125, 249, 0.08);
 }
 
 .results-count {
@@ -750,7 +773,7 @@ body {
     width: 100%;
     height: 600px;
     margin-bottom: 1rem;
-    border-radius: 1rem;
+    border-radius: 1.25rem;
     overflow: hidden;
     box-shadow: var(--shadow-lg);
     border: 1px solid var(--border-color);
@@ -772,17 +795,19 @@ body {
     width: 100%;
     height: 100px;
     object-fit: cover;
-    border-radius: 0.375rem;
+    border-radius: 0.75rem;
     cursor: pointer;
-    opacity: 0.7;
-    transition: opacity 0.2s;
-    border: 2px solid transparent;
+    opacity: 0.65;
+    transition: all 0.3s ease;
+    border: 2.5px solid transparent;
 }
 
 .gallery-thumb:hover,
 .gallery-thumb.active {
     opacity: 1;
     border-color: var(--primary-color);
+    transform: scale(1.02);
+    box-shadow: var(--shadow-soft);
 }
 
 .property-content-grid {
@@ -833,19 +858,20 @@ body {
 
 .property-details-card,
 .contact-card {
-    background: var(--bg-light);
-    padding: 2rem;
-    border-radius: 1rem;
+    background: var(--white);
+    padding: 2.5rem;
+    border-radius: 1.25rem;
     margin-bottom: 2rem;
     box-shadow: var(--shadow);
     border: 1px solid var(--border-color);
-    transition: all 0.3s;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .property-details-card:hover,
 .contact-card:hover {
     box-shadow: var(--shadow-md);
-    transform: translateY(-2px);
+    transform: translateY(-3px);
+    border-color: var(--primary-light);
 }
 
 .property-details-card h3,
