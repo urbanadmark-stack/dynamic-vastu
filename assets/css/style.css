@@ -951,11 +951,34 @@ body {
         border-bottom: 1px solid var(--border-color);
     }
     
+    .nav-link.nav-btn {
+        width: auto;
+        margin: 0.5rem 0;
+        display: inline-block;
+        text-align: center;
+        border-bottom: none;
+    }
+    
+    .nav-link.nav-btn-free {
+        margin-left: 0;
+    }
+    
+    .nav-link.nav-btn-login {
+        margin-left: 0;
+        width: 100%;
+        text-align: center;
+        margin-top: 0.5rem;
+    }
+    
     .nav-link:last-child {
         border-bottom: none;
     }
     
     .nav-link::after {
+        display: none;
+    }
+    
+    .nav-link.nav-btn::after {
         display: none;
     }
     
