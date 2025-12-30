@@ -1,6 +1,12 @@
 <?php
 require_once 'includes/functions.php';
 $featured_properties = getFeaturedProperties(6);
+$featured_project = null;
+// Get first featured project for hero section
+$featured_projects = getProjects(['featured_project' => 1, 'limit' => 1]);
+if (!empty($featured_projects)) {
+    $featured_project = $featured_projects[0];
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">

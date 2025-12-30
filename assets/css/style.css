@@ -150,31 +150,57 @@ body {
 
 /* Hero Section */
 .hero {
-    background: linear-gradient(135deg, #1e3a8a 0%, #2563eb 50%, #3b82f6 100%);
-    color: var(--white);
-    padding: 5rem 0;
-    text-align: center;
     position: relative;
+    min-height: 600px;
+    display: flex;
+    flex-direction: column;
     overflow: hidden;
+    color: var(--white);
 }
 
-.hero::before {
-    content: '';
+.hero-background {
     position: absolute;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
-    background: url('data:image/svg+xml,<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg"><rect width="100" height="100" fill="none"/><path d="M0 50 Q25 0 50 50 T100 50" stroke="rgba(255,255,255,0.05)" stroke-width="2" fill="none"/></svg>');
-    opacity: 0.3;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    z-index: 0;
+}
+
+.hero-background-gradient {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, #1e3a8a 0%, #2563eb 50%, #3b82f6 100%);
+    z-index: 0;
+}
+
+.hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(to bottom, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.5) 100%);
+    z-index: 1;
 }
 
 .hero-content {
     position: relative;
-    z-index: 1;
+    z-index: 2;
+    flex: 1;
+    display: flex;
+    align-items: center;
+    padding: 4rem 0 0;
 }
 
 .hero-text {
+    text-align: center;
     margin-bottom: 3rem;
 }
 
@@ -184,6 +210,7 @@ body {
     font-weight: 800;
     letter-spacing: -0.5px;
     line-height: 1.2;
+    color: var(--white);
 }
 
 .hero-content p {
@@ -191,6 +218,142 @@ body {
     margin-bottom: 0;
     opacity: 0.95;
     font-weight: 300;
+    color: var(--white);
+}
+
+.hero-project-info {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+    align-items: center;
+}
+
+.hero-project-badge {
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 1rem;
+    padding: 2rem;
+    color: var(--white);
+}
+
+.hero-project-highlight {
+    text-align: right;
+    color: var(--white);
+}
+
+.hero-payment-plan {
+    display: inline-block;
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
+    padding: 0.5rem 1.5rem;
+    border-radius: 0.5rem;
+    font-weight: 600;
+    font-size: 1.1rem;
+    margin-bottom: 1rem;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.hero-cta-btn {
+    display: inline-block;
+    background: transparent;
+    border: 2px solid var(--white);
+    color: var(--white);
+    padding: 1rem 2.5rem;
+    border-radius: 0.5rem;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 1.1rem;
+    transition: all 0.3s;
+    margin-top: 1rem;
+}
+
+.hero-cta-btn:hover {
+    background: var(--white);
+    color: var(--primary-color);
+}
+
+.hero-search-container {
+    position: relative;
+    z-index: 3;
+    margin-top: auto;
+    padding: 2rem 0;
+}
+
+.hero-search-container .search-form {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+}
+
+.search-tabs {
+    display: flex;
+    gap: 0;
+    background: var(--white);
+    border-radius: 0.5rem 0.5rem 0 0;
+    padding: 0.5rem 1rem 0;
+    overflow-x: auto;
+}
+
+.search-tab {
+    background: none;
+    border: none;
+    padding: 1rem 1.5rem;
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: var(--text-light);
+    cursor: pointer;
+    position: relative;
+    transition: color 0.2s;
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.search-tab:hover {
+    color: var(--primary-color);
+}
+
+.search-tab.active {
+    color: var(--primary-color);
+}
+
+.search-tab.active::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: var(--primary-color);
+}
+
+.search-tab-badge {
+    width: 8px;
+    height: 8px;
+    background: var(--danger);
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.search-select-category {
+    background: var(--bg-light);
+    border: 1px solid var(--border-color);
+    border-right: none;
+    border-radius: 0.5rem 0 0 0.5rem;
+    padding: 1rem 1.25rem;
+    font-size: 0.95rem;
+    color: var(--text-color);
+    cursor: pointer;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg width='12' height='8' viewBox='0 0 12 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1L6 6L11 1' stroke='%236b7280' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 1rem center;
+    padding-right: 2.5rem;
 }
 
 .search-form {
@@ -198,10 +361,19 @@ body {
     margin: 0 auto 3rem;
 }
 
+.hero-search-container .search-form {
+    margin-bottom: 0;
+}
+
+.hero-search-container .search-grid {
+    border-radius: 0 0 0.5rem 0.5rem;
+    margin-top: 0;
+}
+
 .search-grid {
     display: grid;
-    grid-template-columns: 2.5fr 1.5fr 1.5fr auto;
-    gap: 1rem;
+    grid-template-columns: auto 1fr auto;
+    gap: 0;
     background: var(--white);
     padding: 1.75rem;
     border-radius: 1rem;
