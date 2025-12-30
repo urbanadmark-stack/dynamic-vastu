@@ -120,7 +120,7 @@ $meta_description = !empty($project['meta_description']) ? $project['meta_descri
                     <?php if (count($project_images) > 1): ?>
                         <div class="gallery-thumbnails">
                             <?php foreach ($project_images as $index => $image): ?>
-                                <img src="uploads/<?php echo htmlspecialchars($image); ?>" alt="Thumbnail <?php echo $index + 1; ?>" class="gallery-thumb <?php echo $index === 0 ? 'active' : ''; ?>" onclick="changeImage(this.src)">
+                                <img src="uploads/<?php echo htmlspecialchars($image); ?>" alt="Thumbnail <?php echo $index + 1; ?>" class="gallery-thumb <?php echo $index === 0 ? 'active' : ''; ?>" onclick="changeImage(this)">
                             <?php endforeach; ?>
                         </div>
                     <?php endif; ?>
@@ -281,12 +281,16 @@ $meta_description = !empty($project['meta_description']) ? $project['meta_descri
     <?php include 'includes/footer.php'; ?>
     <script src="assets/js/main.js"></script>
     <script>
-        function changeImage(src) {
-            document.getElementById('main-image').src = src;
-            document.querySelectorAll('.gallery-thumb').forEach(thumb => {
-                thumb.classList.remove('active');
-            });
-            event.target.classList.add('active');
+        function changeImage(element) {
+            const mainImage = document.getElementById('main-image');
+            if (mainImage && element) {
+                const newSrc = element.getAttribute('src') || element.src;
+                mainImage.src = newSrc;
+                document.querySelectorAll('.gallery-thumb').forEach(thumb => {
+                    thumb.classList.remove('active');
+                });
+                element.classList.add('active');
+            }
         }
     </script>
 </body>

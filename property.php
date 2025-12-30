@@ -58,7 +58,7 @@ $features = !empty($property['features']) ? json_decode($property['features'], t
                     <?php if (count($images) > 1): ?>
                         <div class="gallery-thumbnails">
                             <?php foreach ($images as $index => $image): ?>
-                                <img src="uploads/<?php echo htmlspecialchars($image); ?>" alt="Thumbnail <?php echo $index + 1; ?>" class="gallery-thumb <?php echo $index === 0 ? 'active' : ''; ?>" onclick="changeImage(this.src)">
+                                <img src="uploads/<?php echo htmlspecialchars($image); ?>" alt="Thumbnail <?php echo $index + 1; ?>" class="gallery-thumb <?php echo $index === 0 ? 'active' : ''; ?>" onclick="changeImage(this)">
                             <?php endforeach; ?>
                         </div>
                     <?php endif; ?>

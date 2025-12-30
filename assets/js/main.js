@@ -44,19 +44,18 @@ document.addEventListener('DOMContentLoaded', function() {
     });
     
     // Image gallery functionality
-    window.changeImage = function(src) {
+    window.changeImage = function(element) {
         const mainImage = document.getElementById('main-image');
-        if (mainImage) {
-            mainImage.src = src;
-            // Update active thumbnail - find by matching src
+        if (mainImage && element) {
+            // Use the element's src attribute directly (relative path)
+            const newSrc = element.getAttribute('src') || element.src;
+            mainImage.src = newSrc;
+            
+            // Update active thumbnail - directly mark the clicked element as active
             document.querySelectorAll('.gallery-thumb').forEach(thumb => {
                 thumb.classList.remove('active');
-                const thumbSrc = thumb.getAttribute('src');
-                // Match by relative path (handle both full URL and relative path)
-                if (thumbSrc === src || thumb.src === src || thumbSrc.includes(src.split('/').pop())) {
-                    thumb.classList.add('active');
-                }
             });
+            element.classList.add('active');
         }
     };
     
