@@ -277,20 +277,20 @@ $features_text = is_array($existing_features) ? implode("\n", $existing_features
                     <small>Maximum file size: 5MB per image. Formats: JPG, PNG, GIF, WebP</small>
                 </div>
                 
-                <h3>Agent Information</h3>
+                <h3>Sales Team Information</h3>
                 <div class="form-grid">
                     <div class="form-group">
-                        <label for="agent_name">Agent Name</label>
+                        <label for="agent_name">Sales Team Name</label>
                         <input type="text" id="agent_name" name="agent_name" value="<?php echo htmlspecialchars($property['agent_name'] ?? ''); ?>">
                     </div>
                     
                     <div class="form-group">
-                        <label for="agent_phone">Agent Phone</label>
+                        <label for="agent_phone">Sales Team Phone</label>
                         <input type="text" id="agent_phone" name="agent_phone" value="<?php echo htmlspecialchars($property['agent_phone'] ?? ''); ?>">
                     </div>
                     
                     <div class="form-group">
-                        <label for="agent_email">Agent Email</label>
+                        <label for="agent_email">Sales Team Email</label>
                         <input type="email" id="agent_email" name="agent_email" value="<?php echo htmlspecialchars($property['agent_email'] ?? ''); ?>">
                     </div>
                     

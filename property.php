@@ -127,7 +127,7 @@ $features = !empty($property['features']) ? json_decode($property['features'], t
                     
                     <?php if ($property['agent_name'] || $property['agent_phone'] || $property['agent_email']): ?>
                         <div class="contact-card">
-                            <h3>Contact Agent</h3>
+                            <h3>Contact Sales Team</h3>
                             <?php if ($property['agent_name']): ?>
                                 <p class="agent-name"><?php echo htmlspecialchars($property['agent_name']); ?></p>
                             <?php endif; ?>
