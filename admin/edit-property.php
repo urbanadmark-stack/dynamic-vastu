@@ -39,6 +39,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         'agent_name' => sanitize($_POST['agent_name'] ?? ''),
         'agent_phone' => sanitize($_POST['agent_phone'] ?? ''),
         'agent_email' => sanitize($_POST['agent_email'] ?? ''),
+        'rera_number' => sanitize($_POST['rera_number'] ?? ''),
     ];
     
     // Handle image uploads
