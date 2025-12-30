@@ -3,9 +3,16 @@ require_once 'includes/functions.php';
 $featured_properties = getFeaturedProperties(6);
 $featured_project = null;
 // Get first featured project for hero section
-$featured_projects = getProjects(['featured_project' => 1, 'limit' => 1]);
-if (!empty($featured_projects)) {
-    $featured_project = $featured_projects[0];
+try {
+    $all_projects = getProjects(['limit' => 100]);
+    foreach ($all_projects as $proj) {
+        if (!empty($proj['featured_project'])) {
+            $featured_project = $proj;
+            break;
+        }
+    }
+} catch (Exception $e) {
+    // Projects table might not exist yet, continue without featured project
 }
 ?>
 <!DOCTYPE html>
@@ -22,53 +29,90 @@ if (!empty($featured_projects)) {
     <main>
         <!-- Hero Section -->
         <section class="hero">
-            <div class="hero-content">
-                <div class="hero-text">
-                    <h1>Find Your Dream Property in India</h1>
-                    <p>Discover premium homes, luxury apartments, and prime commercial spaces across India</p>
-                </div>
-                <form class="search-form" action="listings.php" method="GET">
-                    <div class="search-grid">
-                        <div class="search-input-wrapper">
-                            <svg width="20" height="20" fill="currentColor" viewBox="0 0 16 16" style="position: absolute; left: 1rem; top: 50%; transform: translateY(-50%); color: #6b7280;">
-                                <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
-                            </svg>
-                            <input type="text" name="city" placeholder="Search by City, Location..." class="search-input" style="padding-left: 3rem;">
+            <?php if ($featured_project): 
+                $project_images = getProjectImages($featured_project['project_images'] ?? null);
+                $hero_image = !empty($project_images) ? 'uploads/' . $project_images[0] : 'assets/images/placeholder.svg';
+            ?>
+                <div class="hero-background" style="background-image: url('<?php echo htmlspecialchars($hero_image); ?>');"></div>
+                <div class="hero-overlay"></div>
+                <div class="hero-content">
+                    <div class="hero-project-info">
+                        <div class="hero-project-badge">
+                            <h2 style="margin: 0; font-size: 1.5rem; font-weight: 700; color: #fff;"><?php echo htmlspecialchars($featured_project['project_name']); ?></h2>
+                            <?php if (!empty($featured_project['developer_name'])): ?>
+                                <p style="margin: 0.5rem 0 0 0; font-size: 0.875rem; color: rgba(255,255,255,0.9);"><?php echo htmlspecialchars($featured_project['developer_name']); ?></p>
+                            <?php endif; ?>
+                            <?php if (!empty($featured_project['locality']) || !empty($featured_project['city'])): ?>
+                                <p style="margin: 0.25rem 0 0 0; font-size: 0.75rem; color: rgba(255,255,255,0.8);">
+                                    <?php echo htmlspecialchars(($featured_project['locality'] ?? '') . ($featured_project['locality'] && $featured_project['city'] ? ', ' : '') . ($featured_project['city'] ?? '')); ?>
+                                </p>
+                            <?php endif; ?>
+                            <?php if (!empty($featured_project['rera_registration_number'])): ?>
+                                <p style="margin: 0.5rem 0 0 0; font-size: 0.7rem; color: rgba(255,255,255,0.75);">
+                                    RERA: <?php echo htmlspecialchars($featured_project['rera_registration_number']); ?>
+                                </p>
+                            <?php endif; ?>
                         </div>
-                        <select name="property_type" class="search-select">
-                            <option value="">All Property Types</option>
+                        <div class="hero-project-highlight">
+                            <?php 
+                            $payment_plans = !empty($featured_project['payment_plans']) ? json_decode($featured_project['payment_plans'], true) : [];
+                            if (!empty($payment_plans)): ?>
+                                <div class="hero-payment-plan"><?php echo htmlspecialchars($payment_plans[0]); ?></div>
+                            <?php endif; ?>
+                            <h3 style="margin: 1rem 0; font-size: 2.5rem; font-weight: 700; color: #fff;">LIVE THE VACATION LIFE</h3>
+                            <?php if ($featured_project['id']): ?>
+                                <a href="project.php?id=<?php echo $featured_project['id']; ?>" class="hero-cta-btn">Explore Now →</a>
+                            <?php endif; ?>
+                        </div>
+                    </div>
+                </div>
+            <?php else: ?>
+                <div class="hero-background-gradient"></div>
+                <div class="hero-content">
+                    <div class="hero-text">
+                        <h1>Find Your Dream Property in India</h1>
+                        <p>Discover premium homes, luxury apartments, and prime commercial spaces across India</p>
+                    </div>
+                </div>
+            <?php endif; ?>
+            
+            <!-- Search Bar -->
+            <div class="hero-search-container">
+                <form class="search-form" action="listings.php" method="GET">
+                    <div class="search-tabs">
+                        <button type="button" class="search-tab active" data-action="listings.php">Buy</button>
+                        <button type="button" class="search-tab" data-action="listings.php?status=for_rent">Rent</button>
+                        <button type="button" class="search-tab" data-action="projects.php">
+                            New Launch
+                            <span class="search-tab-badge"></span>
+                        </button>
+                        <button type="button" class="search-tab" data-action="listings.php?property_type=commercial">Commercial</button>
+                        <button type="button" class="search-tab" data-action="listings.php?property_type=land">Plots/Land</button>
+                        <button type="button" class="search-tab" data-action="projects.php">Projects</button>
+                    </div>
+                    <div class="search-grid">
+                        <select name="property_type" class="search-select-category">
+                            <option value="">All Residential</option>
                             <option value="house">House</option>
                             <option value="apartment">Apartment</option>
                             <option value="villa">Villa</option>
-                            <option value="commercial">Commercial</option>
-                            <option value="land">Land</option>
                         </select>
-                        <select name="status" class="search-select">
-                            <option value="for_sale">For Sale</option>
-                            <option value="for_rent">For Rent</option>
-                        </select>
-                        <button type="submit" class="btn btn-primary search-btn">
-                            <span>Search Properties</span>
-                            <svg width="20" height="20" fill="currentColor" viewBox="0 0 16 16" style="margin-left: 0.5rem;">
+                        <div class="search-input-wrapper">
+                            <svg width="20" height="20" fill="currentColor" viewBox="0 0 16 16" style="position: absolute; left: 1rem; top: 50%; transform: translateY(-50%); color: #6b7280; pointer-events: none;">
                                 <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
                             </svg>
-                        </button>
+                            <input type="text" name="city" placeholder="Search 'Hyderabad'" class="search-input" style="padding-left: 3rem; padding-right: 3rem;">
+                            <svg width="20" height="20" fill="currentColor" viewBox="0 0 16 16" style="position: absolute; right: 2.5rem; top: 50%; transform: translateY(-50%); color: #6b7280; pointer-events: none;">
+                                <path d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10zm0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6z"/>
+                            </svg>
+                            <svg width="20" height="20" fill="currentColor" viewBox="0 0 16 16" style="position: absolute; right: 0.75rem; top: 50%; transform: translateY(-50%); color: #6b7280; cursor: pointer;">
+                                <path d="M15.854 8.854a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L14.293 8.5l-2.147 2.146a.5.5 0 0 0 .708.708l3-3z"/>
+                                <path d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8zm7-6a6 6 0 1 1 0 12A6 6 0 0 1 8 2z"/>
+                            </svg>
+                        </div>
+                        <button type="submit" class="btn btn-primary search-btn">Search</button>
                     </div>
                 </form>
-                <div class="hero-stats">
-                    <div class="stat-item">
-                        <span class="stat-number">500+</span>
-                        <span class="stat-label">Properties</span>
-                    </div>
-                    <div class="stat-item">
-                        <span class="stat-number">50+</span>
-                        <span class="stat-label">Cities</span>
-                    </div>
-                    <div class="stat-item">
-                        <span class="stat-number">1000+</span>
-                        <span class="stat-label">Happy Clients</span>
-                    </div>
-                </div>
             </div>
         </section>
 
@@ -126,4 +170,3 @@ if (!empty($featured_projects)) {
     <script src="assets/js/main.js"></script>
 </body>
 </html>
-
