@@ -132,7 +132,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <div class="form-group">
                         <label for="area_unit">Area Unit</label>
                         <select id="area_unit" name="area_unit">
-                            <option value="sqft" <?php echo (isset($_POST['area_unit']) && $_POST['area_unit'] == 'sqft') ? 'selected' : 'selected'; ?>>Square Feet (sq ft)</option>
+                            <option value="sqft" <?php echo (!isset($_POST['area_unit']) || $_POST['area_unit'] == 'sqft') ? 'selected' : ''; ?>>Square Feet (sq ft)</option>
                             <option value="sqm" <?php echo (isset($_POST['area_unit']) && $_POST['area_unit'] == 'sqm') ? 'selected' : ''; ?>>Square Meters (sq m)</option>
                             <option value="sq_yd" <?php echo (isset($_POST['area_unit']) && $_POST['area_unit'] == 'sq_yd') ? 'selected' : ''; ?>>Square Yards (sq yd)</option>
                             <option value="acres" <?php echo (isset($_POST['area_unit']) && $_POST['area_unit'] == 'acres') ? 'selected' : ''; ?>>Acres</option>
