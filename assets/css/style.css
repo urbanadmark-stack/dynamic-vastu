@@ -932,6 +932,11 @@ body {
         font-size: 2rem;
     }
     
+    .search-grid {
+        grid-template-columns: 1fr;
+        padding: 1.5rem;
+    }
+    
     .properties-grid {
         grid-template-columns: 1fr;
     }
