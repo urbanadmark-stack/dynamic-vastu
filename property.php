@@ -65,7 +65,7 @@ $features = !empty($property['features']) ? json_decode($property['features'], t
                 </div>
             <?php else: ?>
                 <div class="property-gallery">
-                    <img src="assets/images/placeholder.jpg" alt="No image available">
+                    <img src="assets/images/placeholder.svg" alt="No image available">
                 </div>
             <?php endif; ?>
             

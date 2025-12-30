@@ -1,0 +1,6 @@
+Run this command in your terminal to deploy:
+
+ssh -p 65002 u698056983@82.112.229.147 "cd /home/u698056983/public_html && if [ -d .git ]; then git pull origin main; else git init && git remote add origin https://github.com/urbanadmark-stack/dynamic-vastu.git && git fetch origin && git checkout -b main origin/main; fi"
+
+Or use the deploy.bat file by double-clicking it!
+

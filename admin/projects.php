@@ -56,7 +56,7 @@ $projects = getProjects();
                         <?php else: ?>
                             <?php foreach ($projects as $project): 
                                 $images = getProjectImages($project['project_images']);
-                                $main_image = !empty($images) ? '../uploads/' . $images[0] : '../assets/images/placeholder.jpg';
+                                $main_image = !empty($images) ? '../uploads/' . $images[0] : '../assets/images/placeholder.svg';
                             ?>
                                 <tr>
                                     <td><?php echo $project['id']; ?></td>

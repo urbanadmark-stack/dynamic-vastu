@@ -7,7 +7,16 @@ if (!isset($_GET['id']) || empty($_GET['id'])) {
     exit();
 }
 
-$project = getProject(intval($_GET['id']));
+$project = null;
+try {
+    $project = getProject(intval($_GET['id']));
+} catch (Exception $e) {
+    // Handle case where projects table doesn't exist
+    error_log("Error fetching project: " . $e->getMessage());
+    header('Location: projects.php');
+    exit();
+}
+
 if (!$project) {
     header('Location: projects.php');
     exit();

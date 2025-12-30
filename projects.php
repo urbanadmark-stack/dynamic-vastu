@@ -15,7 +15,14 @@ if (isset($_GET['state']) && !empty($_GET['state'])) {
     $filters['state'] = sanitize($_GET['state']);
 }
 
-$projects = getProjects($filters);
+$projects = [];
+try {
+    $projects = getProjects($filters);
+} catch (Exception $e) {
+    // Handle case where projects table doesn't exist
+    error_log("Error fetching projects: " . $e->getMessage());
+    $projects = [];
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -73,7 +80,7 @@ $projects = getProjects($filters);
                 <div class="properties-grid">
                     <?php foreach ($projects as $project): 
                         $images = getProjectImages($project['project_images']);
-                        $main_image = !empty($images) ? 'uploads/' . $images[0] : 'assets/images/placeholder.jpg';
+                        $main_image = !empty($images) ? 'uploads/' . $images[0] : 'assets/images/placeholder.svg';
                         $price_range = '';
                         if ($project['price_range_min'] && $project['price_range_max']) {
                             $price_range = formatPrice($project['price_range_min']) . ' - ' . formatPrice($project['price_range_max']);

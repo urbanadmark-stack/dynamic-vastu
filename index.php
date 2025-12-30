@@ -202,7 +202,7 @@ try {
                     <div class="properties-grid">
                         <?php foreach ($featured_properties as $property): 
                             $images = getPropertyImages($property['images']);
-                            $main_image = !empty($images) ? 'uploads/' . $images[0] : 'assets/images/placeholder.jpg';
+                            $main_image = !empty($images) ? 'uploads/' . $images[0] : 'assets/images/placeholder.svg';
                         ?>
                             <div class="property-card">
                                 <div class="property-image">
