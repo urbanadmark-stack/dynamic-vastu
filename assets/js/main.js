@@ -82,5 +82,26 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     });
+    
+    // Search Tab Functionality
+    const searchTabs = document.querySelectorAll('.search-tab');
+    const searchForm = document.querySelector('.hero-search-container .search-form');
+    
+    if (searchTabs.length > 0 && searchForm) {
+        searchTabs.forEach(tab => {
+            tab.addEventListener('click', function() {
+                // Remove active class from all tabs
+                searchTabs.forEach(t => t.classList.remove('active'));
+                // Add active class to clicked tab
+                this.classList.add('active');
+                
+                // Update form action if data-action is present
+                const action = this.getAttribute('data-action');
+                if (action) {
+                    searchForm.setAttribute('action', action);
+                }
+            });
+        });
+    }
 });
 
