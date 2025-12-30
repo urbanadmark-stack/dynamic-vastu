@@ -565,7 +565,8 @@ body {
 
 .property-status {
     left: 1rem;
-    background: var(--secondary-color);
+    background: linear-gradient(135deg, var(--secondary-color) 0%, #4ade80 100%);
+    box-shadow: 0 2px 8px rgba(91, 185, 138, 0.3);
 }
 
 .property-type {
