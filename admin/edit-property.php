@@ -61,11 +61,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (empty($data['title']) || empty($data['address']) || empty($data['city']) || $data['price'] <= 0) {
         $error = 'Please fill in all required fields';
     } else {
-        if (updateProperty($property['id'], $data)) {
-            header('Location: index.php?success=updated');
-            exit();
-        } else {
-            $error = 'Failed to update property. Please try again.';
+        try {
+            if (updateProperty($property['id'], $data)) {
+                header('Location: index.php?success=updated');
+                exit();
+            } else {
+                $error = 'Failed to update property. Please try again.';
+            }
+        } catch (Exception $e) {
+            $error = 'An error occurred while updating the property. Please check if the database has the rera_number column.';
         }
     }
     
