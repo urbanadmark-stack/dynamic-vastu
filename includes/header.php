@@ -17,6 +17,7 @@
             <nav class="main-nav" id="mainNav">
                 <a href="index.php" class="nav-link">Home</a>
                 <a href="listings.php" class="nav-link">Properties</a>
+                <a href="projects.php" class="nav-link">Projects</a>
                 <a href="listings.php?status=for_sale" class="nav-link">For Sale</a>
                 <a href="listings.php?status=for_rent" class="nav-link">For Rent</a>
                 <?php if (isAdmin()): ?>

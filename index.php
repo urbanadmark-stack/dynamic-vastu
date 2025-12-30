@@ -17,13 +17,20 @@ $featured_properties = getFeaturedProperties(6);
         <!-- Hero Section -->
         <section class="hero">
             <div class="hero-content">
-                <h1>Find Your Perfect Property</h1>
-                <p>Discover amazing homes, apartments, and commercial spaces</p>
+                <div class="hero-text">
+                    <h1>Find Your Dream Property in India</h1>
+                    <p>Discover premium homes, luxury apartments, and prime commercial spaces across India</p>
+                </div>
                 <form class="search-form" action="listings.php" method="GET">
                     <div class="search-grid">
-                        <input type="text" name="city" placeholder="City, State, or Zip" class="search-input">
+                        <div class="search-input-wrapper">
+                            <svg width="20" height="20" fill="currentColor" viewBox="0 0 16 16" style="position: absolute; left: 1rem; top: 50%; transform: translateY(-50%); color: #6b7280;">
+                                <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+                            </svg>
+                            <input type="text" name="city" placeholder="Search by City, Location..." class="search-input" style="padding-left: 3rem;">
+                        </div>
                         <select name="property_type" class="search-select">
-                            <option value="">All Types</option>
+                            <option value="">All Property Types</option>
                             <option value="house">House</option>
                             <option value="apartment">Apartment</option>
                             <option value="villa">Villa</option>
@@ -34,16 +41,38 @@ $featured_properties = getFeaturedProperties(6);
                             <option value="for_sale">For Sale</option>
                             <option value="for_rent">For Rent</option>
                         </select>
-                        <button type="submit" class="btn btn-primary">Search</button>
+                        <button type="submit" class="btn btn-primary search-btn">
+                            <span>Search Properties</span>
+                            <svg width="20" height="20" fill="currentColor" viewBox="0 0 16 16" style="margin-left: 0.5rem;">
+                                <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+                            </svg>
+                        </button>
                     </div>
                 </form>
+                <div class="hero-stats">
+                    <div class="stat-item">
+                        <span class="stat-number">500+</span>
+                        <span class="stat-label">Properties</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">50+</span>
+                        <span class="stat-label">Cities</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">1000+</span>
+                        <span class="stat-label">Happy Clients</span>
+                    </div>
+                </div>
             </div>
         </section>
 
         <!-- Featured Properties -->
         <section class="featured-section">
             <div class="container">
-                <h2 class="section-title">Featured Properties</h2>
+                <div class="section-header">
+                    <h2 class="section-title">Featured Properties</h2>
+                    <p class="section-subtitle">Explore our handpicked selection of premium properties across India</p>
+                </div>
                 <?php if (empty($featured_properties)): ?>
                     <p class="no-results">No properties available at the moment. Check back soon!</p>
                 <?php else: ?>

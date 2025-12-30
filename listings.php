@@ -36,7 +36,10 @@ $properties = getProperties($filters);
     
     <main class="listings-page">
         <div class="container">
-            <h1 class="page-title">All Properties</h1>
+            <div class="page-header">
+                <h1 class="page-title">All Properties</h1>
+                <p class="page-subtitle">Browse through our complete collection of properties</p>
+            </div>
             
             <!-- Filters -->
             <div class="filters-section">

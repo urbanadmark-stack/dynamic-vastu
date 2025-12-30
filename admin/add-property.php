@@ -21,7 +21,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         'city' => sanitize($_POST['city'] ?? ''),
         'state' => sanitize($_POST['state'] ?? ''),
         'zip_code' => sanitize($_POST['zip_code'] ?? ''),
-        'country' => sanitize($_POST['country'] ?? 'USA'),
+        'country' => sanitize($_POST['country'] ?? 'India'),
         'images' => '',
         'features' => '',
         'year_built' => !empty($_POST['year_built']) ? intval($_POST['year_built']) : null,
@@ -29,6 +29,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         'agent_name' => sanitize($_POST['agent_name'] ?? ''),
         'agent_phone' => sanitize($_POST['agent_phone'] ?? ''),
         'agent_email' => sanitize($_POST['agent_email'] ?? ''),
+        'rera_number' => sanitize($_POST['rera_number'] ?? ''),
     ];
     
     // Handle image uploads
@@ -131,9 +132,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <div class="form-group">
                         <label for="area_unit">Area Unit</label>
                         <select id="area_unit" name="area_unit">
-                            <option value="sqft" <?php echo (isset($_POST['area_unit']) && $_POST['area_unit'] == 'sqft') ? 'selected' : 'selected'; ?>>Square Feet</option>
-                            <option value="sqm" <?php echo (isset($_POST['area_unit']) && $_POST['area_unit'] == 'sqm') ? 'selected' : ''; ?>>Square Meters</option>
-                            <option value="acres" <?php echo (isset($_POST['area_unit']) && $_POST['area_unit'] == 'acres') ? 'selected' : ''; ?>>Acres</option>
+                            <option value="sqft" <?php echo (isset($_POST['area_unit']) && $_POST['area_unit'] == 'sqft') ? 'selected' : 'selected'; ?>>Square Feet (sq ft)</option>
+                            <option value="sqm" <?php echo (isset($_POST['area_unit']) && $_POST['area_unit'] == 'sqm') ? 'selected' : ''; ?>>Square Meters (sq m)</option>
                         </select>
                     </div>
                 </div>
@@ -161,7 +161,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     
                     <div class="form-group">
                         <label for="country">Country</label>
-                        <input type="text" id="country" name="country" value="<?php echo isset($_POST['country']) ? htmlspecialchars($_POST['country']) : 'USA'; ?>">
+                        <input type="text" id="country" name="country" value="<?php echo isset($_POST['country']) ? htmlspecialchars($_POST['country']) : 'India'; ?>">
                     </div>
                 </div>
                 
@@ -208,6 +208,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <div class="form-group">
                         <label for="agent_email">Agent Email</label>
                         <input type="email" id="agent_email" name="agent_email" value="<?php echo isset($_POST['agent_email']) ? htmlspecialchars($_POST['agent_email']) : ''; ?>">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="rera_number">RERA Number</label>
+                        <input type="text" id="rera_number" name="rera_number" placeholder="e.g., PRM/KA/RERA/1251/310/AG/171113/000290" value="<?php echo isset($_POST['rera_number']) ? htmlspecialchars($_POST['rera_number']) : ''; ?>">
+                        <small style="display: block; margin-top: 0.25rem; color: #6b7280; font-size: 0.875rem;">Real Estate Regulatory Authority registration number (optional)</small>
                     </div>
                 </div>
                 

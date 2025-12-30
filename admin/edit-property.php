@@ -31,7 +31,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         'city' => sanitize($_POST['city'] ?? ''),
         'state' => sanitize($_POST['state'] ?? ''),
         'zip_code' => sanitize($_POST['zip_code'] ?? ''),
-        'country' => sanitize($_POST['country'] ?? 'USA'),
+        'country' => sanitize($_POST['country'] ?? 'India'),
         'images' => $property['images'],
         'features' => '',
         'year_built' => !empty($_POST['year_built']) ? intval($_POST['year_built']) : null,
@@ -149,9 +149,8 @@ $features_text = is_array($existing_features) ? implode("\n", $existing_features
                     <div class="form-group">
                         <label for="area_unit">Area Unit</label>
                         <select id="area_unit" name="area_unit">
-                            <option value="sqft" <?php echo ($property['area_unit'] ?? 'sqft') == 'sqft' ? 'selected' : ''; ?>>Square Feet</option>
-                            <option value="sqm" <?php echo ($property['area_unit'] ?? '') == 'sqm' ? 'selected' : ''; ?>>Square Meters</option>
-                            <option value="acres" <?php echo ($property['area_unit'] ?? '') == 'acres' ? 'selected' : ''; ?>>Acres</option>
+                            <option value="sqft" <?php echo ($property['area_unit'] ?? 'sqft') == 'sqft' ? 'selected' : ''; ?>>Square Feet (sq ft)</option>
+                            <option value="sqm" <?php echo ($property['area_unit'] ?? '') == 'sqm' ? 'selected' : ''; ?>>Square Meters (sq m)</option>
                         </select>
                     </div>
                 </div>
@@ -179,7 +178,7 @@ $features_text = is_array($existing_features) ? implode("\n", $existing_features
                     
                     <div class="form-group">
                         <label for="country">Country</label>
-                        <input type="text" id="country" name="country" value="<?php echo htmlspecialchars($property['country'] ?? 'USA'); ?>">
+                        <input type="text" id="country" name="country" value="<?php echo htmlspecialchars($property['country'] ?? 'India'); ?>">
                     </div>
                 </div>
                 
@@ -242,6 +241,12 @@ $features_text = is_array($existing_features) ? implode("\n", $existing_features
                     <div class="form-group">
                         <label for="agent_email">Agent Email</label>
                         <input type="email" id="agent_email" name="agent_email" value="<?php echo htmlspecialchars($property['agent_email'] ?? ''); ?>">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="rera_number">RERA Number</label>
+                        <input type="text" id="rera_number" name="rera_number" placeholder="e.g., PRM/KA/RERA/1251/310/AG/171113/000290" value="<?php echo htmlspecialchars($property['rera_number'] ?? ''); ?>">
+                        <small style="display: block; margin-top: 0.25rem; color: #6b7280; font-size: 0.875rem;">Real Estate Regulatory Authority registration number (optional)</small>
                     </div>
                 </div>
                 

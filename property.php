@@ -117,6 +117,12 @@ $features = !empty($property['features']) ? json_decode($property['features'], t
                             <span class="detail-value"><?php echo $property['year_built']; ?></span>
                         </div>
                         <?php endif; ?>
+                        <?php if (!empty($property['rera_number'])): ?>
+                        <div class="detail-row">
+                            <span class="detail-label">RERA Number:</span>
+                            <span class="detail-value" style="font-size: 0.9rem;"><?php echo htmlspecialchars($property['rera_number']); ?></span>
+                        </div>
+                        <?php endif; ?>
                     </div>
                     
                     <?php if ($property['agent_name'] || $property['agent_phone'] || $property['agent_email']): ?>

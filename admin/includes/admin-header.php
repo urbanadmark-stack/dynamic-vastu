@@ -6,6 +6,7 @@
             </div>
             <nav class="admin-nav">
                 <a href="index.php">Properties</a>
+                <a href="projects.php">Projects</a>
                 <a href="../index.php" target="_blank">View Site</a>
                 <a href="logout.php">Logout</a>
             </nav>
