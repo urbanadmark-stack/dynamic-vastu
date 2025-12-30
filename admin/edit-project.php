@@ -31,11 +31,11 @@ $indian_states = [
 
 // Decode JSON fields for display
 $project_highlights = !empty($project['project_highlights']) ? json_decode($project['project_highlights'], true) : [];
-$unit_configurations = !empty($project['available_unit_types']) ? json_decode($project['available_unit_types'], true) : [];
+$unit_configurations = !empty($project['unit_configurations']) ? json_decode($project['unit_configurations'], true) : [];
 $amenities_array = !empty($project['amenities']) ? json_decode($project['amenities'], true) : [];
 $nearby_locations = !empty($project['nearby_locations']) ? json_decode($project['nearby_locations'], true) : [];
 $project_images = !empty($project['project_images']) ? json_decode($project['project_images'], true) : [];
-$renders_3d = !empty($project['3d_renders']) ? json_decode($project['3d_renders'], true) : [];
+$renders_3d = !empty($project['renders_3d']) ? json_decode($project['renders_3d'], true) : [];
 $payment_plans = !empty($project['payment_plans']) ? json_decode($project['payment_plans'], true) : [];
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -174,11 +174,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Reload project data
     $project = getProject($project['id']);
     $project_highlights = !empty($project['project_highlights']) ? json_decode($project['project_highlights'], true) : [];
-    $unit_configurations = !empty($project['available_unit_types']) ? json_decode($project['available_unit_types'], true) : [];
+    $unit_configurations = !empty($project['unit_configurations']) ? json_decode($project['unit_configurations'], true) : [];
     $amenities_array = !empty($project['amenities']) ? json_decode($project['amenities'], true) : [];
     $nearby_locations = !empty($project['nearby_locations']) ? json_decode($project['nearby_locations'], true) : [];
     $project_images = !empty($project['project_images']) ? json_decode($project['project_images'], true) : [];
-    $renders_3d = !empty($project['3d_renders']) ? json_decode($project['3d_renders'], true) : [];
+    $renders_3d = !empty($project['renders_3d']) ? json_decode($project['renders_3d'], true) : [];
     $payment_plans = !empty($project['payment_plans']) ? json_decode($project['payment_plans'], true) : [];
 }
 ?>
@@ -292,7 +292,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             <label for="rera_number">RERA Registration Number <span class="required-field">*</span></label>
                             <input type="text" id="rera_number" name="rera_number" required
                                    placeholder="e.g., PRM/KA/RERA/1251/310/AG/171113/000290"
-                                   value="<?php echo isset($_POST['rera_number']) ? htmlspecialchars($_POST['rera_number']) : htmlspecialchars($project['rera_registration_number'] ?? ''); ?>">
+                                   value="<?php echo isset($_POST['rera_number']) ? htmlspecialchars($_POST['rera_number']) : htmlspecialchars($project['rera_number'] ?? ''); ?>">
                             <div class="form-help">Mandatory for all real estate projects in India</div>
                         </div>
                         
@@ -326,7 +326,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <div class="form-group">
                             <label for="developer_rera_number">Developer RERA Registration Number</label>
                             <input type="text" id="developer_rera_number" name="developer_rera_number"
-                                   value="<?php echo isset($_POST['developer_rera_number']) ? htmlspecialchars($_POST['developer_rera_number']) : htmlspecialchars($project['developer_rera_registration_number'] ?? ''); ?>">
+                                   value="<?php echo isset($_POST['developer_rera_number']) ? htmlspecialchars($_POST['developer_rera_number']) : htmlspecialchars($project['developer_rera_number'] ?? ''); ?>">
                         </div>
                     </div>
                 </div>

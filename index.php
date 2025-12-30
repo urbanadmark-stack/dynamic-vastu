@@ -52,9 +52,9 @@ try {
                                     <?php echo htmlspecialchars(($featured_project['locality'] ?? '') . ($featured_project['locality'] && $featured_project['city'] ? ', ' : '') . ($featured_project['city'] ?? '')); ?>
                                 </p>
                             <?php endif; ?>
-                            <?php if (!empty($featured_project['rera_registration_number'])): ?>
+                            <?php if (!empty($featured_project['rera_number'])): ?>
                                 <p style="margin: 0.5rem 0 0 0; font-size: 0.7rem; color: rgba(255,255,255,0.75);">
-                                    RERA: <?php echo htmlspecialchars($featured_project['rera_registration_number']); ?>
+                                    RERA: <?php echo htmlspecialchars($featured_project['rera_number']); ?>
                                 </p>
                             <?php endif; ?>
                         </div>
@@ -167,9 +167,9 @@ try {
                                         <?php echo htmlspecialchars(substr($proj['short_description'], 0, 100)) . (strlen($proj['short_description']) > 100 ? '...' : ''); ?>
                                     </p>
                                 <?php endif; ?>
-                                <?php if (!empty($proj['rera_registration_number'])): ?>
+                                <?php if (!empty($proj['rera_number'])): ?>
                                     <p style="font-size: 0.75rem; color: #6b7280; margin: 0.5rem 0;">
-                                        RERA: <?php echo htmlspecialchars($proj['rera_registration_number']); ?>
+                                        RERA: <?php echo htmlspecialchars($proj['rera_number']); ?>
                                     </p>
                                 <?php endif; ?>
                                 <?php if ($price_range): ?>
