@@ -1,4 +1,9 @@
 -- Real Estate Listing Database Schema
+-- 
+-- IMPORTANT: For existing databases created before the Indian market update:
+-- 1. Run database/add_rera_column.sql to add RERA number support
+-- 2. Run database/update_country_default.sql to update country default to 'India'
+--
 CREATE TABLE IF NOT EXISTS `properties` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `title` varchar(255) NOT NULL,

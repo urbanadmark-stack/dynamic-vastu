@@ -68,8 +68,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             } else {
                 $error = 'Failed to update property. Please try again.';
             }
+        } catch (PDOException $e) {
+            // Check if error is due to missing column
+            if (strpos($e->getMessage(), 'rera_number') !== false || strpos($e->getMessage(), 'Unknown column') !== false) {
+                $error = 'Database error: The rera_number column is missing. Please run the migration: database/add_rera_column.sql';
+            } else {
+                error_log("Update property error: " . $e->getMessage());
+                $error = 'An error occurred while updating the property: ' . htmlspecialchars($e->getMessage());
+            }
         } catch (Exception $e) {
-            $error = 'An error occurred while updating the property. Please check if the database has the rera_number column.';
+            error_log("Update property error: " . $e->getMessage());
+            $error = 'An error occurred while updating the property. Please check the error logs for details.';
         }
     }
     
