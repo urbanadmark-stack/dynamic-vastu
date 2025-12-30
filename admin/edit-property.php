@@ -42,14 +42,43 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         'rera_number' => sanitize($_POST['rera_number'] ?? ''),
     ];
     
+    // Handle image removal
+    $existing_images = getPropertyImages($property['images']);
+    if (!empty($_POST['remove_images']) && is_array($_POST['remove_images'])) {
+        $images_to_remove = array_filter($_POST['remove_images']); // Remove empty values
+        
+        if (!empty($images_to_remove)) {
+            // Delete physical files
+            foreach ($images_to_remove as $img_to_remove) {
+                $file_path = UPLOAD_DIR . $img_to_remove;
+                if (file_exists($file_path)) {
+                    @unlink($file_path);
+                }
+            }
+            
+            // Remove from array
+            $existing_images = array_filter($existing_images, function($img) use ($images_to_remove) {
+                return !in_array($img, $images_to_remove);
+            });
+            
+            // Re-index array
+            $existing_images = array_values($existing_images);
+        }
+    }
+    
     // Handle image uploads
     if (!empty($_FILES['images']['name'][0])) {
         $uploaded_images = uploadImages($_FILES['images']);
         if (!empty($uploaded_images)) {
-            $existing_images = getPropertyImages($property['images']);
             $all_images = array_merge($existing_images, $uploaded_images);
             $data['images'] = json_encode($all_images);
+        } else {
+            // No new uploads, use existing (possibly modified) images
+            $data['images'] = !empty($existing_images) ? json_encode($existing_images) : null;
         }
+    } else {
+        // No new uploads, use existing (possibly modified) images
+        $data['images'] = !empty($existing_images) ? json_encode($existing_images) : null;
     }
     
     // Handle features
@@ -227,9 +256,15 @@ $features_text = is_array($existing_features) ? implode("\n", $existing_features
                     <div class="form-group">
                         <label>Current Images</label>
                         <div class="existing-images">
-                            <?php foreach ($existing_images as $img): ?>
+                            <?php foreach ($existing_images as $index => $img): ?>
                                 <div class="image-preview">
                                     <img src="../uploads/<?php echo htmlspecialchars($img); ?>" alt="Property image">
+                                    <button type="button" class="remove-image-btn" data-image="<?php echo htmlspecialchars($img); ?>" onclick="removeImage(this)" title="Remove image">
+                                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M15 5L5 15M5 5L15 15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                        </svg>
+                                    </button>
+                                    <input type="hidden" name="remove_images[]" value="" class="remove-image-input">
                                 </div>
                             <?php endforeach; ?>
                         </div>
@@ -273,6 +308,26 @@ $features_text = is_array($existing_features) ? implode("\n", $existing_features
             </form>
         </div>
     </main>
+    <script>
+        function removeImage(button) {
+            const imagePreview = button.closest('.image-preview');
+            const imageName = button.getAttribute('data-image');
+            const hiddenInput = imagePreview.querySelector('.remove-image-input');
+            
+            if (confirm('Are you sure you want to remove this image?')) {
+                // Mark as removed visually
+                imagePreview.classList.add('removed');
+                
+                // Set the hidden input value to mark for removal
+                hiddenInput.value = imageName;
+                
+                // Disable the button
+                button.disabled = true;
+                button.style.opacity = '0.5';
+                button.style.cursor = 'not-allowed';
+            }
+        }
+    </script>
 </body>
 </html>
 
