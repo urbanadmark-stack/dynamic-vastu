@@ -194,8 +194,6 @@ $features_text = is_array($existing_features) ? implode("\n", $existing_features
                         <select id="area_unit" name="area_unit">
                             <option value="sqft" <?php echo ($property['area_unit'] ?? 'sqft') == 'sqft' ? 'selected' : ''; ?>>Square Feet (sq ft)</option>
                             <option value="sqm" <?php echo ($property['area_unit'] ?? '') == 'sqm' ? 'selected' : ''; ?>>Square Meters (sq m)</option>
-                            <option value="sq_yd" <?php echo ($property['area_unit'] ?? '') == 'sq_yd' ? 'selected' : ''; ?>>Square Yards (sq yd)</option>
-                            <option value="acres" <?php echo ($property['area_unit'] ?? '') == 'acres' ? 'selected' : ''; ?>>Acres</option>
                         </select>
                     </div>
                 </div>

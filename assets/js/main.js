@@ -85,6 +85,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Search Tab Functionality
     const searchTabs = document.querySelectorAll('.search-tab');
     const searchForm = document.querySelector('.hero-search-container .search-form');
+    const searchTypeSelect = document.getElementById('search-type-select');
     
     if (searchTabs.length > 0 && searchForm) {
         searchTabs.forEach(tab => {
@@ -98,6 +99,30 @@ document.addEventListener('DOMContentLoaded', function() {
                 const action = this.getAttribute('data-action');
                 if (action) {
                     searchForm.setAttribute('action', action);
+                    
+                    // Fix parameter name mismatch: change property_type to project_type when searching projects
+                    if (action.includes('projects.php') && searchTypeSelect) {
+                        searchTypeSelect.setAttribute('name', 'project_type');
+                        // Update options for project types (matching database enum values)
+                        const currentValue = searchTypeSelect.value;
+                        searchTypeSelect.innerHTML = `
+                            <option value="">All Project Types</option>
+                            <option value="residential" ${currentValue === 'residential' ? 'selected' : ''}>Residential</option>
+                            <option value="commercial" ${currentValue === 'commercial' ? 'selected' : ''}>Commercial</option>
+                            <option value="mixed_use" ${currentValue === 'mixed_use' ? 'selected' : ''}>Mixed Use</option>
+                            <option value="plotted_development" ${currentValue === 'plotted_development' ? 'selected' : ''}>Plotted Development</option>
+                        `;
+                    } else if (searchTypeSelect) {
+                        // Restore property_type for listings
+                        searchTypeSelect.setAttribute('name', 'property_type');
+                        const currentValue = searchTypeSelect.value;
+                        searchTypeSelect.innerHTML = `
+                            <option value="">All Residential</option>
+                            <option value="house" ${currentValue === 'house' ? 'selected' : ''}>House</option>
+                            <option value="apartment" ${currentValue === 'apartment' ? 'selected' : ''}>Apartment</option>
+                            <option value="villa" ${currentValue === 'villa' ? 'selected' : ''}>Villa</option>
+                        `;
+                    }
                 }
             });
         });

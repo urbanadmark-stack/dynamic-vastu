@@ -96,7 +96,7 @@ try {
                         <button type="button" class="search-tab" data-action="projects.php">Projects</button>
                     </div>
                     <div class="search-grid">
-                        <select name="property_type" class="search-select-category">
+                        <select name="property_type" id="search-type-select" class="search-select-category">
                             <option value="">All Residential</option>
                             <option value="house">House</option>
                             <option value="apartment">Apartment</option>
