@@ -15,14 +15,16 @@
                 <span></span>
             </button>
             <nav class="main-nav" id="mainNav">
-                <a href="index.php" class="nav-link">Home</a>
-                <a href="listings.php" class="nav-link">Properties</a>
-                <a href="projects.php" class="nav-link">Projects</a>
-                <a href="listings.php?status=for_sale" class="nav-link">For Sale</a>
-                <a href="listings.php?status=for_rent" class="nav-link">For Rent</a>
+                <a href="admin/add-property.php" class="nav-link">List Property</a>
+                <a href="admin/add-property.php" class="nav-link nav-btn nav-btn-free">Free</a>
+                <a href="listings.php?status=for_sale" class="nav-link">Buy</a>
+                <a href="listings.php?status=for_rent" class="nav-link">Rent</a>
+                <a href="projects.php" class="nav-link">New Launches</a>
+                <a href="#" class="nav-link">Blogs</a>
                 <?php if (isAdmin()): ?>
-                    <a href="admin/index.php" class="nav-link admin-link">Admin Panel</a>
-                    <a href="admin/logout.php" class="nav-link">Logout</a>
+                    <a href="admin/logout.php" class="nav-link nav-btn nav-btn-login">Logout</a>
+                <?php else: ?>
+                    <a href="admin/login.php" class="nav-link nav-btn nav-btn-login">Login</a>
                 <?php endif; ?>
             </nav>
         </div>
