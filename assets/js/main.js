@@ -1,8 +1,33 @@
 // Main JavaScript file
 
-// Mobile menu toggle (if needed in future)
 document.addEventListener('DOMContentLoaded', function() {
-    // Add any interactive features here
+    // Mobile menu toggle
+    const mobileMenuToggle = document.querySelector('.mobile-menu-toggle');
+    const mainNav = document.querySelector('#mainNav');
+    
+    if (mobileMenuToggle && mainNav) {
+        mobileMenuToggle.addEventListener('click', function() {
+            mobileMenuToggle.classList.toggle('active');
+            mainNav.classList.toggle('active');
+        });
+        
+        // Close menu when clicking on a link
+        const navLinks = mainNav.querySelectorAll('.nav-link');
+        navLinks.forEach(link => {
+            link.addEventListener('click', function() {
+                mobileMenuToggle.classList.remove('active');
+                mainNav.classList.remove('active');
+            });
+        });
+        
+        // Close menu when clicking outside
+        document.addEventListener('click', function(e) {
+            if (!mainNav.contains(e.target) && !mobileMenuToggle.contains(e.target)) {
+                mobileMenuToggle.classList.remove('active');
+                mainNav.classList.remove('active');
+            }
+        });
+    }
     
     // Smooth scroll for anchor links
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
@@ -17,6 +42,23 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     });
+    
+    // Image gallery functionality
+    window.changeImage = function(src) {
+        const mainImage = document.getElementById('main-image');
+        if (mainImage) {
+            mainImage.src = src;
+            // Update active thumbnail - find by matching src
+            document.querySelectorAll('.gallery-thumb').forEach(thumb => {
+                thumb.classList.remove('active');
+                const thumbSrc = thumb.getAttribute('src');
+                // Match by relative path (handle both full URL and relative path)
+                if (thumbSrc === src || thumb.src === src || thumbSrc.includes(src.split('/').pop())) {
+                    thumb.classList.add('active');
+                }
+            });
+        }
+    };
     
     // Form validation enhancement
     const forms = document.querySelectorAll('form');

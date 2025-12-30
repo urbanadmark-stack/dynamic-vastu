@@ -139,13 +139,6 @@ $features = !empty($property['features']) ? json_decode($property['features'], t
     </main>
 
     <?php include 'includes/footer.php'; ?>
-    <script>
-        function changeImage(src) {
-            document.getElementById('main-image').src = src;
-            document.querySelectorAll('.gallery-thumb').forEach(thumb => thumb.classList.remove('active'));
-            event.target.classList.add('active');
-        }
-    </script>
     <script src="assets/js/main.js"></script>
 </body>
 </html>
