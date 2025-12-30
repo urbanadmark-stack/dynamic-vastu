@@ -53,7 +53,7 @@ Write-Host "Successfully pushed to GitHub!" -ForegroundColor Green
 # Deploy to server
 Write-Host ""
 Write-Host "Deploying to Hostinger server..." -ForegroundColor Yellow
-Write-Host "SSH: $SSH_USER@$SSH_HOST:$SSH_PORT" -ForegroundColor Gray
+Write-Host "SSH: ${SSH_USER}@${SSH_HOST}:${SSH_PORT}" -ForegroundColor Gray
 Write-Host "Path: $REMOTE_PATH" -ForegroundColor Gray
 Write-Host ""
 
@@ -86,6 +86,6 @@ if ($LASTEXITCODE -eq 0) {
     Write-Host "3. Network connection is stable" -ForegroundColor Yellow
     Write-Host ""
     Write-Host "You can also deploy manually by running:" -ForegroundColor Cyan
-    Write-Host "ssh -p $SSH_PORT $SSH_USER@$SSH_HOST `"cd $REMOTE_PATH && git pull origin main`"" -ForegroundColor Gray
+    Write-Host "ssh -p ${SSH_PORT} ${SSH_USER}@${SSH_HOST} `"cd ${REMOTE_PATH} && git pull origin main`"" -ForegroundColor Gray
 }
 
