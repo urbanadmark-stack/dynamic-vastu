@@ -2,15 +2,20 @@
 require_once 'includes/functions.php';
 $featured_properties = getFeaturedProperties(6);
 $featured_project = null;
-// Get first featured project for hero section
+$featured_projects = [];
+// Get first featured project for hero section and featured projects for homepage section
 try {
     $all_projects = getProjects(['limit' => 100]);
     foreach ($all_projects as $proj) {
         if (!empty($proj['featured_project'])) {
-            $featured_project = $proj;
-            break;
+            if (!$featured_project) {
+                $featured_project = $proj; // Use first one for hero
+            }
+            $featured_projects[] = $proj; // Collect all featured projects
         }
     }
+    // Limit featured projects to 6 for the section
+    $featured_projects = array_slice($featured_projects, 0, 6);
 } catch (Exception $e) {
     // Projects table might not exist yet, continue without featured project
 }
@@ -115,6 +120,74 @@ try {
                 </form>
             </div>
         </section>
+
+        <!-- Featured Projects -->
+        <?php if (!empty($featured_projects)): ?>
+        <section class="featured-section" style="background: var(--bg-light); padding: 4rem 0;">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">Featured New Launches</h2>
+                    <p class="section-subtitle">Discover premium real estate projects with RERA registration across India</p>
+                </div>
+                <div class="properties-grid">
+                    <?php foreach ($featured_projects as $proj): 
+                        $project_images = getProjectImages($proj['project_images'] ?? null);
+                        $main_image = !empty($project_images) ? 'uploads/' . $project_images[0] : 'assets/images/placeholder.svg';
+                        $price_range = '';
+                        if ($proj['price_range_min'] && $proj['price_range_max']) {
+                            $price_range = formatPrice($proj['price_range_min']) . ' - ' . formatPrice($proj['price_range_max']);
+                        } elseif ($proj['price_range_min']) {
+                            $price_range = 'Starting from ' . formatPrice($proj['price_range_min']);
+                        }
+                    ?>
+                        <div class="property-card">
+                            <div class="property-image">
+                                <img src="<?php echo htmlspecialchars($main_image); ?>" alt="<?php echo htmlspecialchars($proj['project_name']); ?>">
+                                <span class="property-status"><?php echo ucfirst(str_replace('_', ' ', $proj['project_status'] ?? 'new_launch')); ?></span>
+                                <span class="property-type"><?php echo ucfirst(str_replace('_', ' ', $proj['project_type'] ?? 'residential')); ?></span>
+                                <?php if ($proj['hot_deal'] ?? false): ?>
+                                    <span class="property-type" style="background: #ef4444;">Hot Deal</span>
+                                <?php endif; ?>
+                            </div>
+                            <div class="property-content">
+                                <h3><a href="project.php?id=<?php echo $proj['id']; ?>"><?php echo htmlspecialchars($proj['project_name']); ?></a></h3>
+                                <?php if (!empty($proj['developer_name'])): ?>
+                                    <p style="color: var(--text-light); font-size: 0.875rem; margin-bottom: 0.5rem;">
+                                        by <strong><?php echo htmlspecialchars($proj['developer_name']); ?></strong>
+                                    </p>
+                                <?php endif; ?>
+                                <p class="property-location">
+                                    <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                                        <path d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10zm0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6z"/>
+                                    </svg>
+                                    <?php echo htmlspecialchars(($proj['locality'] ?? $proj['city'] ?? '') . ($proj['locality'] && $proj['city'] ? ', ' : '') . ($proj['city'] ?? '') . ($proj['city'] && $proj['state'] ? ', ' : '') . ($proj['state'] ?? '')); ?>
+                                </p>
+                                <?php if (!empty($proj['short_description'])): ?>
+                                    <p style="color: var(--text-light); font-size: 0.9rem; margin: 1rem 0;">
+                                        <?php echo htmlspecialchars(substr($proj['short_description'], 0, 100)) . (strlen($proj['short_description']) > 100 ? '...' : ''); ?>
+                                    </p>
+                                <?php endif; ?>
+                                <?php if (!empty($proj['rera_registration_number'])): ?>
+                                    <p style="font-size: 0.75rem; color: #6b7280; margin: 0.5rem 0;">
+                                        RERA: <?php echo htmlspecialchars($proj['rera_registration_number']); ?>
+                                    </p>
+                                <?php endif; ?>
+                                <?php if ($price_range): ?>
+                                    <div class="property-price">
+                                        <?php echo $price_range; ?>
+                                    </div>
+                                <?php endif; ?>
+                                <a href="project.php?id=<?php echo $proj['id']; ?>" class="btn btn-outline">View Project Details</a>
+                            </div>
+                        </div>
+                    <?php endforeach; ?>
+                </div>
+                <div class="text-center" style="margin-top: 2rem;">
+                    <a href="projects.php" class="btn btn-primary">View All Projects</a>
+                </div>
+            </div>
+        </section>
+        <?php endif; ?>
 
         <!-- Featured Properties -->
         <section class="featured-section">
