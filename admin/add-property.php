@@ -49,11 +49,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (empty($data['title']) || empty($data['address']) || empty($data['city']) || $data['price'] <= 0) {
         $error = 'Please fill in all required fields';
     } else {
-        if (addProperty($data)) {
-            header('Location: index.php?success=added');
-            exit();
-        } else {
-            $error = 'Failed to add property. Please try again.';
+        try {
+            if (addProperty($data)) {
+                header('Location: index.php?success=added');
+                exit();
+            } else {
+                $error = 'Failed to add property. Please try again.';
+            }
+        } catch (PDOException $e) {
+            // Check if error is due to missing column
+            if (strpos($e->getMessage(), 'rera_number') !== false || strpos($e->getMessage(), 'Unknown column') !== false) {
+                $error = 'Database error: The rera_number column is missing. Please run the migration: database/add_rera_column.sql';
+            } else {
+                error_log("Add property error: " . $e->getMessage());
+                $error = 'An error occurred while adding the property: ' . htmlspecialchars($e->getMessage());
+            }
+        } catch (Exception $e) {
+            error_log("Add property error: " . $e->getMessage());
+            $error = 'An error occurred while adding the property. Please check the error logs for details.';
         }
     }
 }
