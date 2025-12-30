@@ -1,0 +1,30 @@
+# Sensitive configuration files
+config.php
+
+# User uploads (property images)
+uploads/*
+!uploads/.gitkeep
+
+# IDE and editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Logs
+*.log
+
+# Temporary files
+*.tmp
+*.temp
+
+# Environment files
+.env
+.env.local
+
+# Composer (if you add it later)
+vendor/
+composer.lock
+
