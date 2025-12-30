@@ -102,44 +102,48 @@ function addProperty($data) {
 
 // Update property
 function updateProperty($id, $data) {
-    $db = getDB();
-    $sql = "UPDATE properties SET 
-            title = :title, description = :description, property_type = :property_type, 
-            status = :status, price = :price, bedrooms = :bedrooms, bathrooms = :bathrooms, 
-            area = :area, area_unit = :area_unit, address = :address, city = :city, 
-            state = :state, zip_code = :zip_code, country = :country, images = :images, 
-            features = :features, year_built = :year_built, parking = :parking, 
-            agent_name = :agent_name, agent_phone = :agent_phone, agent_email = :agent_email, 
-            rera_number = :rera_number 
-            WHERE id = :id";
-    
-    $stmt = $db->prepare($sql);
-    $data[':id'] = $id;
-    return $stmt->execute([
-        ':id' => $id,
-        ':title' => $data['title'],
-        ':description' => $data['description'],
-        ':property_type' => $data['property_type'],
-        ':status' => $data['status'],
-        ':price' => $data['price'],
-        ':bedrooms' => $data['bedrooms'] ?? null,
-        ':bathrooms' => $data['bathrooms'] ?? null,
-        ':area' => $data['area'] ?? null,
-        ':area_unit' => $data['area_unit'] ?? 'sqft',
-        ':address' => $data['address'],
-        ':city' => $data['city'],
-        ':state' => $data['state'] ?? null,
-        ':zip_code' => $data['zip_code'] ?? null,
-        ':country' => $data['country'] ?? 'India',
-        ':images' => $data['images'] ?? null,
-        ':features' => $data['features'] ?? null,
-        ':year_built' => $data['year_built'] ?? null,
-        ':parking' => $data['parking'] ?? null,
-        ':agent_name' => $data['agent_name'] ?? null,
-        ':agent_phone' => $data['agent_phone'] ?? null,
-        ':agent_email' => $data['agent_email'] ?? null,
-        ':rera_number' => $data['rera_number'] ?? null,
-    ]);
+    try {
+        $db = getDB();
+        $sql = "UPDATE properties SET 
+                title = :title, description = :description, property_type = :property_type, 
+                status = :status, price = :price, bedrooms = :bedrooms, bathrooms = :bathrooms, 
+                area = :area, area_unit = :area_unit, address = :address, city = :city, 
+                state = :state, zip_code = :zip_code, country = :country, images = :images, 
+                features = :features, year_built = :year_built, parking = :parking, 
+                agent_name = :agent_name, agent_phone = :agent_phone, agent_email = :agent_email, 
+                rera_number = :rera_number 
+                WHERE id = :id";
+        
+        $stmt = $db->prepare($sql);
+        return $stmt->execute([
+            ':id' => $id,
+            ':title' => $data['title'],
+            ':description' => $data['description'],
+            ':property_type' => $data['property_type'],
+            ':status' => $data['status'],
+            ':price' => $data['price'],
+            ':bedrooms' => $data['bedrooms'] ?? null,
+            ':bathrooms' => $data['bathrooms'] ?? null,
+            ':area' => $data['area'] ?? null,
+            ':area_unit' => $data['area_unit'] ?? 'sqft',
+            ':address' => $data['address'],
+            ':city' => $data['city'],
+            ':state' => $data['state'] ?? null,
+            ':zip_code' => $data['zip_code'] ?? null,
+            ':country' => $data['country'] ?? 'India',
+            ':images' => $data['images'] ?? null,
+            ':features' => $data['features'] ?? null,
+            ':year_built' => $data['year_built'] ?? null,
+            ':parking' => $data['parking'] ?? null,
+            ':agent_name' => $data['agent_name'] ?? null,
+            ':agent_phone' => $data['agent_phone'] ?? null,
+            ':agent_email' => $data['agent_email'] ?? null,
+            ':rera_number' => $data['rera_number'] ?? null,
+        ]);
+    } catch (PDOException $e) {
+        error_log("Update property error: " . $e->getMessage());
+        return false;
+    }
 }
 
 // Delete property
